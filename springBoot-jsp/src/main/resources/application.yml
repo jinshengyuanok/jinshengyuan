@@ -1,0 +1,55 @@
+#server:
+#port: 8089
+spring:
+  ### 1.Spring MVC 相关配置 注意mvc与 datasource同级别
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  ## 2.数据源信息配置
+  datasource:
+    #以下这种写法有问题，
+    #url: jdbc:mysql://192.168.1.154/:3306/account?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&useSSL=false
+    #url: jdbc:mysql://192.168.1.154/account  #这里不用指定端口，默认就是3306
+    url: jdbc:mysql://localhost:3306/account?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&useSSL=false
+    username: root
+    password: yuan
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    #validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    #filters: stat,wall,log4j
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+  ### 3.国际化资源文件配置
+  messages:
+    basename: i18n.login
+
+
+###整合MyBatis 相关配置
+mybatis:
+  #MyBatis配置文件
+  config-location: classpath:/configs/config/mybatis-config.xml
+  # *Mapper.xml文件
+  mapper-locations: classpath:/configs/mappers/*/*.xml
+  # POJO对象
+  type-aliases-package: com.yuan.model
+
+
+
+
+
